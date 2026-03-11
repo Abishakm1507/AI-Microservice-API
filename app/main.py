@@ -1,15 +1,19 @@
 from fastapi import FastAPI
 
+from app.routes import chat
+from app.routes import summarize
+from app.routes import sentiment
+
 app = FastAPI(
     title="AI Microservice API",
-    description="Microservice for AI powered APIs",
-    version="1.0.0"
+    version="1.0"
 )
+
+app.include_router(chat.router)
+app.include_router(summarize.router)
+app.include_router(sentiment.router)
+
 
 @app.get("/")
 def root():
-    return {"message": "AI Microservice API is running"}
-
-@app.get("/health")
-def health_check():
-    return {"status": "healthy"}
+    return {"message": "AI Microservice API running"}
