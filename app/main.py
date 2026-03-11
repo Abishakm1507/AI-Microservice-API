@@ -1,8 +1,6 @@
 from fastapi import FastAPI
-
-from app.routes import chat
-from app.routes import summarize
-from app.routes import sentiment
+from app.routes import chat, summarize, sentiment
+from app.utils.error_handler import global_exception_handler
 
 app = FastAPI(
     title="AI Microservice API",
@@ -13,6 +11,7 @@ app.include_router(chat.router)
 app.include_router(summarize.router)
 app.include_router(sentiment.router)
 
+app.add_exception_handler(Exception, global_exception_handler)
 
 @app.get("/")
 def root():
